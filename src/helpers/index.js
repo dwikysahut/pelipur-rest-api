@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 module.exports = {
-  response: (response, status, data, { message = 'none' }) => {
+  response: (response, status, { message = 'none' }, data = {}) => {
     const result = {};
     result.status = status || 200;
     result.message = message;

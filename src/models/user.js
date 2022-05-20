@@ -33,7 +33,11 @@ module.exports = {
   getUserById: (id) => new Promise((resolve, reject) => {
     connection.query('SELECT * FROM user where id=? ', id, (error, result) => {
       if (!error) {
-        resolve(result);
+        const newData = {
+          ...result[0],
+        };
+        delete newData.password;
+        resolve(newData);
       } else {
         reject(new Error(error));
       }
