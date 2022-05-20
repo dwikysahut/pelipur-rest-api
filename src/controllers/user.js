@@ -32,7 +32,7 @@ module.exports = {
       const result = await userModel.updateUser(id, setData);
       return helper.response(response, 200, { message: 'update Successfully' }, result);
     } catch (error) {
-      return helper.response(response, 500, { message: 'Failed to update' }, error);
+      return helper.response(response, 500, { message: `Failed to update,${error.message}` });
     }
   },
 };

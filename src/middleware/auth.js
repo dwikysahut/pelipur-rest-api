@@ -10,7 +10,7 @@ module.exports = {
         || (error && error.name === 'JsonWebTokenError')) {
         helper.response(response, 401, {}, { message: error.name });
       } else {
-        console.log(result);
+        // console.log(result);
         request.token = result;
         next();
       }
@@ -19,7 +19,8 @@ module.exports = {
   authorization: (request, response, next) => {
     const token = request.headers.authorization;
     jwt.verify(token, process.env.SECRET_KEY, (error, result) => {
-      const { role } = request.token.result.id_role;
+      console.log(request.token);
+      const role = request.token.result.id_role;
       if (role === 2) {
         helper.response(response, 401, {}, { message: 'You don\'t have access' });
       } else {

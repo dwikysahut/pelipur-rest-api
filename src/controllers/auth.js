@@ -63,9 +63,10 @@ module.exports = {
         refreshToken,
       };
       refreshTokens.push(refreshToken);
-      return helper.response(response, 200, { message: 'login berhasil' }, newData);
+      return helper.response(response, 200, { message: 'login Successfully' }, newData);
     } catch (error) {
-      return helper.response(response, 500, { message: 'error' }, error);
+      console.log(error);
+      return helper.response(response, 500, { message: 'failed to login' });
     }
   },
   refreshToken: async (request, response) => {
@@ -94,7 +95,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return helper.response(response, 500, {
-        message: 'Failed to refresh token',
+        message: `Failed to refresh token ${error.message}`,
       });
     }
   },

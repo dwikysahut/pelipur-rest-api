@@ -2,7 +2,7 @@ const express = require('express');
 
 const Route = express.Router();
 const userController = require('../controllers/user');
-const { authentication, authorization } = require('../middleware/auth');
+const { authentication } = require('../middleware/auth');
 
 Route
   .put('/:id', authentication, userController.updateUser)
