@@ -45,7 +45,7 @@ base url
 
 * `/register`
 
-Register
+## Register
 
 
 ### body
@@ -66,7 +66,7 @@ Register
 
 * `/verify`
 
-Verify email
+## Verify email
 
 
 ### body
@@ -93,7 +93,7 @@ Verify email
 }
 ```
 
-Login
+## Login
 * `/login`
 
 ### body
@@ -119,7 +119,7 @@ Login
 }
 ```
 
-Refresh token
+## Refresh token
 * `/refresh-token`
 
 ### body
@@ -137,7 +137,7 @@ Refresh token
 }
 ```
 
-Forgot password
+## Forgot password
 * `/forgot-password`
 
 ### body
@@ -183,7 +183,7 @@ change password
 }
 ```
 
-Edit Profile
+## Edit Profile
 
 - method:put
 
@@ -208,7 +208,7 @@ Edit Profile
 }
 ```
 
-Get data user by ID
+## Get data user by ID
 
 - method:get
 
@@ -247,7 +247,7 @@ Get data user by ID
 base url
 * `http://localhost:8080/partners/`
 
-get all partners
+## get all partners
 
 - method: GET
 
@@ -278,7 +278,7 @@ get all partners
 ```
 
 
-get partner by id
+## get partner by id
 
 - method: GET
 
@@ -307,7 +307,7 @@ get partner by id
 ```
 
 
-add partner
+## add partner
 
 - method: POST
 
@@ -338,7 +338,7 @@ form data
 ```
 
 
-edit partner
+## edit partner
 
 - method: PUT
 
@@ -369,7 +369,7 @@ min 1 body
 ```
 
 
-delete partner
+## delete partner
 
 - method: DELETE
 
