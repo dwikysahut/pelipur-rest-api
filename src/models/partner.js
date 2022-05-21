@@ -1,3 +1,4 @@
+const fs = require('fs');
 const connection = require('../config/connection');
 
 module.exports = {
@@ -56,5 +57,13 @@ module.exports = {
         reject(new Error(error));
       }
     });
+  }),
+  deletePartnerImage: (image) => new Promise((resolve, reject) => {
+    if (image) {
+      fs.unlink(`./public/image/${image}`, (error) => {
+        if (error) reject(new Error(error));
+        resolve(console.log('delete file Successfully'));
+      });
+    }
   }),
 };

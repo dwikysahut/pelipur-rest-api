@@ -20,7 +20,13 @@ module.exports = {
     const token = request.headers.authorization;
     jwt.verify(token, process.env.SECRET_KEY, (error, result) => {
       console.log(request.token);
-      const role = request.token.result.id_role;
+      let role;
+      if (request.token.result.id_role === undefined) {
+        role = request.token.result.result.id_role;
+        console.log(request.token.result.result.id_role);
+      } else {
+        role = request.token.result.id_role;
+      }
       if (role === 2) {
         helper.response(response, 401, {}, { message: 'You don\'t have access' });
       } else {

@@ -36,6 +36,15 @@ module.exports = {
     try {
       const { id } = request.params;
       const setData = request.body;
+      const partner = await partnerModel.getPartnerById(id);
+      if (request.file) {
+        if (request.file.filename === 'undefined') {
+          console.log('gambar undefined');
+        } else {
+          setData.image = request.file.filename;
+          await partnerModel.deletePartnerImage(partner.image);
+        }
+      }
 
       const result = await partnerModel.putPartner(id, setData);
       return helper.response(response, 200, { message: 'Edit Partner Successfully' }, result);
@@ -47,6 +56,9 @@ module.exports = {
   deletePartner: async (request, response) => {
     try {
       const { id } = request.params;
+      const partner = await partnerModel.getPartnerById(id);
+      await partnerModel.deletePartnerImage(partner.image);
+
       const result = await partnerModel.deletePartner(id);
       return helper.response(response, 200, { message: 'Delete Partner Successfully' }, result);
     } catch (error) {

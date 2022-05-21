@@ -64,6 +64,35 @@ Register
 }
 ```
 
+* `/verify`
+
+Verify email
+
+
+### body
+    email: dwikysatriahut@gmail.com
+    kode: <kode pada email>
+
+```
+{
+    "status": 200,
+    "message": "Account Verified",
+    "data": {
+        "email": "dwikysatriahut@gmail.com",
+        "result": {
+            "fieldCount": 0,
+            "affectedRows": 1,
+            "insertId": 0,
+            "serverStatus": 34,
+            "warningCount": 0,
+            "message": "(Rows matched: 1  Changed: 0  Warnings: 0",
+            "protocol41": true,
+            "changedRows": 0
+        }
+    }
+}
+```
+
 Login
 * `/login`
 
@@ -237,12 +266,12 @@ get all partners
     "data": [
         {
             "id": 1,
-            "name": "PT Starlax Energi Nusantara",
+            "nama": "PT Starlax",
             "alamat": "Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat",
             "email": "Admin@starlax.net",
             "date_added": "2022-05-20T12:53:33.000Z",
-            "date_updated": "2022-05-20T12:53:33.000Z",
-            "image": "tbd"
+            "date_updated": "2022-05-21T13:19:21.000Z",
+            "image": "image-1653139161490.png"
         }
     ]
 }
@@ -264,15 +293,98 @@ get partner by id
 ```
 {
     "status": 200,
-    "message": "get All Partners Successfully",
+    "message": "Get Partner Successfully",
     "data": {
         "id": 1,
-        "name": "PT Starlax Energi Nusantara",
+        "nama": "PT Starlax",
         "alamat": "Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat",
         "email": "Admin@starlax.net",
         "date_added": "2022-05-20T12:53:33.000Z",
-        "date_updated": "2022-05-20T12:53:33.000Z",
-        "image": "tbd"
+        "date_updated": "2022-05-21T13:19:21.000Z",
+        "image": "image-1653139161490.png"
+    }
+}
+```
+
+
+add partner
+
+- method: POST
+
+* `/`
+### body
+form data
+   - nama
+   - alamat
+   - email
+   - image
+
+
+### headers
+    Authorization: <TOKEN>
+
+```
+{
+    "status": 200,
+    "message": "Add Partner Successfully",
+    "data": {
+        "id": 16,
+        "nama": "pt coba",
+        "alamat": "malang",
+        "email": "coba@gmail.com",
+        "image": "image-1653145533061.jpeg"
+    }
+}
+```
+
+
+edit partner
+
+- method: PUT
+
+* `/:id`
+### body
+form data
+min 1 body
+
+   - nama
+   - alamat
+   - email
+   - image
+
+
+### headers
+    Authorization: <TOKEN>
+
+```
+{
+    "status": 200,
+    "message": "Edit Partner Successfully",
+    "data": {
+        "id": "16",
+        "nama": "PT Starlax",
+        "image": "image-1653145560084.png"
+    }
+}
+```
+
+
+delete partner
+
+- method: DELETE
+
+* `/:id`
+### body
+-
+### headers
+    Authorization: <TOKEN>
+
+```
+{
+    "status": 200,
+    "message": "Delete Partner Successfully",
+    "data": {
+        "id": "16"
     }
 }
 ```
