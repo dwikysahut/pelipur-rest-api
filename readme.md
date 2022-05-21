@@ -37,7 +37,7 @@ SERVICE_EMAIL_GENERATE_PASSWORD=cngnumzfpaddlutx
   
 ```
 ## End Point
-**POST Auth**
+# AUTH
 
 base url
 * `http://localhost:port/auth`
@@ -154,7 +154,7 @@ base url
 
 
 
-**User**
+# USER
 
 
 base url
@@ -241,7 +241,7 @@ change password
 ```
 
 
-**Partner**
+# PARTNER / MITRA
 
 
 base url
