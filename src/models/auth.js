@@ -57,4 +57,17 @@ module.exports = {
       }
     });
   }),
+  verifyUser: (email) => new Promise((resolve, reject) => {
+    connection.query("UPDATE user SET verified='true' WHERE email=?", email, (error, result) => {
+      if (!error) {
+        const newData = {
+          email,
+          result,
+        };
+        resolve(newData);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
 };

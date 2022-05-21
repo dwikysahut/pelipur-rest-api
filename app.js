@@ -17,7 +17,7 @@ const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
+app.use('/public', express.static(`${__dirname}/public`));
 app.use(morgan('dev'));
 app.use(
   cors({

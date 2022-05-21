@@ -2,7 +2,7 @@ const express = require('express');
 
 const Route = express.Router();
 const collectionController = require('../controllers/user');
-const { authentication, authorization } = require('../middleware/auth');
+// const { authentication, authorization } = require('../middleware/auth');
 
 Route
   .get('/', collectionController.getAllCollections)

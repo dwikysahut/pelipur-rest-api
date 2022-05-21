@@ -26,8 +26,12 @@ module.exports = {
       console.log(hashPassword);
       setData.password = hashPassword;
       setData.image = `https://ui-avatars.com/api/?size=256&name=${setData.nama ? setData.nama : 'user'}`;
-
+      const randomCode = helper.random(6);
+      const randomCodeHash = bcrypt.hashSync(randomCode, 6);
+      setData.kode_verif = randomCodeHash;
       const result = await authModel.createUser(setData);
+      const htmlTemplate = `<center><h2>Your verification code</h2><hr><h4>code : ${randomCode}</h4></center>`;
+      helper.nodemailer(result.email, 'Verification code', htmlTemplate);
       return helper.response(response, 200, { message: 'Register Successfully' }, result);
     } catch (error) {
       console.log(error);
@@ -40,7 +44,10 @@ module.exports = {
       const result = await authModel.checkUser(getData);
       if (!result) {
         return helper.response(response, 401, { message: 'Invalid Email' });
+      } else if (result.verified === 'false') {
+        return helper.response(response, 401, { message: 'Email does not verify, Please verify your account first' });
       }
+
       const compare = bcrypt.compareSync(getData.password, result.password);
 
       if (!compare) {
@@ -124,13 +131,35 @@ module.exports = {
       const htmlTemplate = `<center><h2>Here's your new password</h2><hr>new password : <h4>${
         newPassword
       }</h4></center>`;
-      helper.nodemailer(result.email, 'Password Recovery Pelipur App', htmlTemplate);
+
+      const emailSent = await helper.nodemailer(result.email, 'Password Recovery Pelipur App', htmlTemplate);
+
       return helper.response(response, 200, {
         message: 'Your Password has been sent to your email',
       });
     } catch (error) {
       console.log(error);
       return helper.response(response, 500, { message: 'error to send password' });
+    }
+  },
+  verifyUser: async (request, response) => {
+    try {
+      const setData = request.body;
+
+      const userChecked = await authModel.checkUser(setData);
+      if (!userChecked) {
+        return helper.response(response, 401, { message: 'Email not found' });
+      }
+      const compare = bcrypt.compareSync(setData.kode, userChecked.kode_verif);
+      if (!compare) {
+        return helper.response(response, 401, { message: 'Invalid verification code' });
+      } else {
+        const result = await authModel.verifyUser(setData.email);
+        return helper.response(response, 200, { message: 'Account Verified' }, result);
+      }
+    } catch (error) {
+      console.log(error);
+      return helper.response(response, 500, { message: error.message });
     }
   },
 

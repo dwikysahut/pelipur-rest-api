@@ -24,6 +24,7 @@ module.exports = {
   postPartner: async (request, response) => {
     try {
       const setData = request.body;
+      setData.image = request.file.filename;
       const result = await partnerModel.postPartner(setData);
 
       return helper.response(response, 200, { message: 'Add Partner Successfully' }, result);

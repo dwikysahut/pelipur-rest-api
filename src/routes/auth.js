@@ -9,6 +9,7 @@ Route
   .post('/login', authController.loginUser)
   .post('/refresh-token', authRefreshToken, authController.refreshToken)
   .post('/logout', authController.deleteToken)
-  .post('/forgot-password', authController.forgotPassword);
+  .post('/forgot-password', authController.forgotPassword)
+  .post('/verify', authController.verifyUser);
 
 module.exports = Route;

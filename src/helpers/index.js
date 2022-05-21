@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
@@ -15,7 +16,7 @@ module.exports = {
       service: process.env.SERVICE_MAILER,
       auth: {
         user: process.env.SERVICE_EMAIL,
-        pass: process.env.SERVICE_EMAIL_PASSWORD,
+        pass: process.env.SERVICE_EMAIL_GENERATE_PASSWORD,
       },
     });
 
@@ -25,7 +26,7 @@ module.exports = {
       subject,
       html: template,
     };
-    transporter.sendMail(mailOptions, (error, info) => {
+    return transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
         return false;
@@ -34,5 +35,14 @@ module.exports = {
       console.log(`Email sent: ${info.response}`);
       return true;
     });
+  },
+  random: (length) => {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   },
 };

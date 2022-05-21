@@ -13,7 +13,6 @@ login
 
 
 pelipurapps@gmail.com 
-Pw: emailpelipur4
 
 ## Set up .env file
 Open .env file on your code editor, and copy paste this code below :
@@ -209,5 +208,71 @@ Get data user by ID
             "image": "https://ui-avatars.com/api/?size=256&name=user"
         }
     ]
+}
+```
+
+
+**Partner**
+
+
+base url
+* `http://localhost:8080/partners/`
+
+get all partners
+
+- method: GET
+
+* `/`
+### body
+   
+
+
+### headers
+    Authorization: <TOKEN>
+
+```
+{
+    "status": 200,
+    "message": "Get All Partners Successfully",
+    "data": [
+        {
+            "id": 1,
+            "name": "PT Starlax Energi Nusantara",
+            "alamat": "Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat",
+            "email": "Admin@starlax.net",
+            "date_added": "2022-05-20T12:53:33.000Z",
+            "date_updated": "2022-05-20T12:53:33.000Z",
+            "image": "tbd"
+        }
+    ]
+}
+```
+
+
+get partner by id
+
+- method: GET
+
+* `/:id`
+### body
+   -
+
+
+### headers
+    Authorization: <TOKEN>
+
+```
+{
+    "status": 200,
+    "message": "get All Partners Successfully",
+    "data": {
+        "id": 1,
+        "name": "PT Starlax Energi Nusantara",
+        "alamat": "Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat",
+        "email": "Admin@starlax.net",
+        "date_added": "2022-05-20T12:53:33.000Z",
+        "date_updated": "2022-05-20T12:53:33.000Z",
+        "image": "tbd"
+    }
 }
 ```
