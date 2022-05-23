@@ -29,6 +29,8 @@ module.exports = {
       const { id } = request.params;
       const setData = request.body;
 
+      setData.image = `https://ui-avatars.com/api/?size=256&name=${setData.nama ? setData.nama : 'user'}`;
+
       const result = await userModel.updateUser(id, setData);
       return helper.response(response, 200, { message: 'update Successfully' }, result);
     } catch (error) {
