@@ -10,7 +10,7 @@ Route
 // .get('/:id', collectionController.getAllCollectionsByUserId)
   .get('/:id', authentication, collectionController.getCollectionsByUser)
   .post('/', authentication, collectionController.postCollection)
-  .put('/confirmation/:id', collectionController.putCollection)
-  .put('/:id', collectionController.putCollection);
+  .put('/confirmation/:id', authentication, authorization, collectionController.putCollection)
+  .put('/:id', authentication, authorization, collectionController.putCollection);
 
 module.exports = Route;

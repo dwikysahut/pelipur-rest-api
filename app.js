@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const routeNavigator = require('./src/index');
 require('dotenv').config();
 
-const server = app.listen(process.env.PORT, process.env.HOST_DEPLOY, () => {
+const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
   const host = server.address().address;
   const { port } = server.address();
 
