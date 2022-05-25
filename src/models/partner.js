@@ -20,6 +20,16 @@ module.exports = {
       }
     });
   }),
+
+  getPartnerByCity: (kota) => new Promise((resolve, reject) => {
+    connection.query('SELECT * FROM mitra where kota_jangkauan LIKE "%?%"', kota, (error, result) => {
+      if (!error) {
+        resolve(result);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
   postPartner: (setData) => new Promise((resolve, reject) => {
     connection.query('INSERT INTO mitra SET ?', setData, (error, result) => {
       if (!error) {

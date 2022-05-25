@@ -12,6 +12,8 @@ login
     - masuk ke email user
 
 
+saat konfirmasi, id mitra muncul berdasarkan filter backend
+
 pelipurapps@gmail.com 
 
 ## Set up .env file

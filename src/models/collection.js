@@ -3,7 +3,7 @@ const connection = require('../config/connection');
 
 module.exports = {
   getAllCollections: () => new Promise((resolve, reject) => {
-    connection.query('SELECT pengumpulan.id,user.nama as nama_user,pengumpulan.tanggal,pengumpulan.waktu,pengumpulan.pesan,pengumpulan.total_minyak,status.status,mitra.nama as nama_mitra,pengumpulan.date_added,pengumpulan.date_updated FROM pengumpulan INNER JOIN user ON pengumpulan.id = user.id INNER JOIN status ON pengumpulan.id = status.id INNER JOIN mitra ON pengumpulan.id_mitra =  mitra.id ORDER BY status,date_added', (error, result) => {
+    connection.query('SELECT pengumpulan.id,user.nama as nama_user,pengumpulan.tanggal,pengumpulan.waktu,pengumpulan.pesan,pengumpulan.total_minyak,status.status,mitra.nama as nama_mitra,pengumpulan.date_added,pengumpulan.id_kota,kota.kota,pengumpulan.date_updated FROM pengumpulan INNER JOIN user ON pengumpulan.id_user = user.id INNER JOIN status ON pengumpulan.id_status = status.id LEFT JOIN mitra ON pengumpulan.id_mitra =  mitra.id INNER JOIN kota ON kota.id = pengumpulan.id_kota ORDER BY status,date_added', (error, result) => {
       if (!error) {
         resolve(result);
       } else {
@@ -12,9 +12,18 @@ module.exports = {
     });
   }),
   getCollectionsByUser: (idUser) => new Promise((resolve, reject) => {
-    connection.query('SELECT pengumpulan.id,user.nama as nama_user,pengumpulan.tanggal,pengumpulan.waktu,pengumpulan.pesan,pengumpulan.total_minyak,status.status,mitra.nama as nama_mitra,pengumpulan.date_added,pengumpulan.date_updated FROM pengumpulan INNER JOIN user ON pengumpulan.id = user.id INNER JOIN status ON pengumpulan.id = status.id INNER JOIN mitra ON pengumpulan.id_mitra =  mitra.id where user.id = ? ORDER BY status,date_added', idUser, (error, result) => {
+    connection.query('SELECT pengumpulan.id,user.nama as nama_user,pengumpulan.tanggal,pengumpulan.waktu,pengumpulan.pesan,pengumpulan.total_minyak,status.status,mitra.nama as nama_mitra,pengumpulan.date_added,pengumpulan.id_kota,kota.kota,pengumpulan.date_updated FROM pengumpulan INNER JOIN user ON pengumpulan.id_user = user.id INNER JOIN status ON pengumpulan.id_status = status.id LEFT JOIN mitra ON pengumpulan.id_mitra =  mitra.id INNER JOIN kota ON kota.id = pengumpulan.id_kota where user.id = ? ORDER BY status,date_added', idUser, (error, result) => {
       if (!error) {
         resolve(result);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
+  getCollectionById: (id) => new Promise((resolve, reject) => {
+    connection.query('SELECT pengumpulan.id,user.nama as nama_user,pengumpulan.tanggal,pengumpulan.waktu,pengumpulan.pesan,pengumpulan.total_minyak,status.status,mitra.nama as nama_mitra,pengumpulan.date_added,pengumpulan.id_kota,kota.kota,pengumpulan.date_updated FROM pengumpulan INNER JOIN user ON pengumpulan.id_user = user.id INNER JOIN status ON pengumpulan.id_status = status.id LEFT JOIN mitra ON pengumpulan.id_mitra =  mitra.id INNER JOIN kota ON kota.id = pengumpulan.id_kota where pengumpulan.id = ? ORDER BY status,date_added', id, (error, result) => {
+      if (!error) {
+        resolve(result[0]);
       } else {
         reject(new Error(error));
       }

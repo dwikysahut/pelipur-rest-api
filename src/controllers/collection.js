@@ -7,6 +7,7 @@ module.exports = {
   getAllCollections: async (request, response) => {
     try {
       const result = await collectionModel.getAllCollections();
+      console.log(result);
 
       return helper.response(response, 200, { message: 'get All Collections Successfully' }, result);
     } catch (error) {
@@ -21,6 +22,16 @@ module.exports = {
       return helper.response(response, 200, { message: 'get Collections by user Successfully' }, result);
     } catch (error) {
       return helper.response(response, 500, { message: 'failed to get collections' }, error.message);
+    }
+  },
+  getCollectionById: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const result = await collectionModel.getCollectionById(id);
+
+      return helper.response(response, 200, { message: 'get Collection by id Successfully' }, result);
+    } catch (error) {
+      return helper.response(response, 500, { message: 'failed to get Collection' }, error.message);
     }
   },
   postCollection: async (request, response) => {

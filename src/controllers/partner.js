@@ -1,4 +1,5 @@
 const partnerModel = require('../models/partner');
+const collectionModel = require('../models/collection');
 const helper = require('../helpers');
 
 module.exports = {
@@ -15,10 +16,24 @@ module.exports = {
     try {
       const { id } = request.params;
       const result = await partnerModel.getPartnerById(id);
-
+      // const newResult = JSON.parse(result.kota_jangkauan);
+      // const array = newResult.map((kota) => parseInt(kota));
+      // console.log(array);
       return helper.response(response, 200, { message: 'Get Partner Successfully' }, result);
     } catch (error) {
+      console.log(error);
       return helper.response(response, 500, { message: 'Failed to get partner' });
+    }
+  },
+  getPartnersByCity: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const result = await collectionModel.getCollectionById(id);
+      const resultPartner = await partnerModel.getPartnerByCity(result.id_kota);
+      return helper.response(response, 200, { message: 'Get Partner by City Successfully' }, resultPartner);
+    } catch (error) {
+      console.log(error);
+      return helper.response(response, 500, { message: 'Failed to get partner by city' });
     }
   },
   postPartner: async (request, response) => {
