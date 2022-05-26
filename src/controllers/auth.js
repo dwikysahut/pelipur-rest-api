@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-else-return */
 /* eslint-disable no-unused-vars */
 const jwt = require('jsonwebtoken');
@@ -8,7 +9,7 @@ const authModel = require('../models/auth');
 const helper = require('../helpers');
 require('dotenv').config();
 
-const refreshTokens = [];
+let refreshTokens = [];
 module.exports = {
   createUser: async (request, response) => {
     try {
@@ -70,6 +71,7 @@ module.exports = {
         refreshToken,
       };
       refreshTokens.push(refreshToken);
+      console.log(refreshTokens);
       return helper.response(response, 200, { message: 'login Successfully' }, newData);
     } catch (error) {
       console.log(error);
@@ -95,8 +97,10 @@ module.exports = {
           token: newToken,
           refreshToken: newRefreshToken,
         };
-        refreshTokens.shift();
+        const newRefreshTokens = refreshTokens.filter((tokenElement) => tokenElement !== token);
+        refreshTokens = newRefreshTokens;
         refreshTokens.push(newRefreshToken);
+        console.log(refreshTokens);
         return helper.response(response, 200, { message: 'Token renew successfully' }, newResult);
       }
     } catch (error) {
@@ -108,7 +112,9 @@ module.exports = {
   },
   deleteToken: async (request, response) => {
     try {
-      refreshTokens.filter((token) => token !== request.body.token);
+      const newRefreshTokens = refreshTokens.filter((token) => token !== request.body.token);
+      refreshTokens = newRefreshTokens;
+      console.log(refreshTokens);
       return helper.response(response, 200, { message: 'logout successfully' });
     } catch (error) {
       return helper.response(response, 500, { message: 'failed to logout' });

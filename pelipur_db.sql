@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 23 Bulan Mei 2022 pada 13.27
+-- Waktu pembuatan: 25 Bulan Mei 2022 pada 17.20
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -46,6 +46,26 @@ INSERT INTO `keterangan` (`id`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kota`
+--
+
+CREATE TABLE `kota` (
+  `id` int(11) NOT NULL,
+  `kota` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kota`
+--
+
+INSERT INTO `kota` (`id`, `kota`) VALUES
+(1, 'Jakarta'),
+(2, 'Depok'),
+(3, 'Tangerang');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `mitra`
 --
 
@@ -56,15 +76,18 @@ CREATE TABLE `mitra` (
   `email` varchar(50) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `image` varchar(500) NOT NULL
+  `image` varchar(500) NOT NULL,
+  `kota_jangkauan` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `mitra`
 --
 
-INSERT INTO `mitra` (`id`, `nama`, `alamat`, `email`, `date_added`, `date_updated`, `image`) VALUES
-(1, 'PT Starlax', 'Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat', 'Admin@starlax.net', '2022-05-20 19:53:33', '2022-05-23 16:23:14', 'image-1653297794418.png');
+INSERT INTO `mitra` (`id`, `nama`, `alamat`, `email`, `date_added`, `date_updated`, `image`, `kota_jangkauan`) VALUES
+(1, 'PT Starlax', 'Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat', 'Admin@starlax.net', '2022-05-20 19:53:33', '2022-05-25 18:31:58', 'image-1653297794418.png', '[1,2,3]'),
+(17, 'PT Starlax', 'malang', 'coba@gmail.com', '2022-05-25 19:09:17', '2022-05-25 22:14:06', 'image-1653480959497.png', '[1,2]'),
+(18, 'pt coba', 'malang', 'coba@gmail.com', '2022-05-25 22:11:32', '2022-05-25 22:11:32', 'image-1653491492438.jpeg', '[1,3]');
 
 -- --------------------------------------------------------
 
@@ -81,6 +104,7 @@ CREATE TABLE `pengumpulan` (
   `pesan` varchar(255) NOT NULL,
   `total_minyak` int(11) NOT NULL,
   `id_status` int(11) NOT NULL DEFAULT 1,
+  `id_kota` int(11) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -89,8 +113,10 @@ CREATE TABLE `pengumpulan` (
 -- Dumping data untuk tabel `pengumpulan`
 --
 
-INSERT INTO `pengumpulan` (`id`, `id_user`, `id_mitra`, `tanggal`, `waktu`, `pesan`, `total_minyak`, `id_status`, `date_added`, `date_updated`) VALUES
-('aYREqX51M1CE8SqN', 'yhSjkxUxIaE6e5v3', 1, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 4, '2022-05-23 16:24:18', '2022-05-23 16:25:53');
+INSERT INTO `pengumpulan` (`id`, `id_user`, `id_mitra`, `tanggal`, `waktu`, `pesan`, `total_minyak`, `id_status`, `id_kota`, `date_added`, `date_updated`) VALUES
+('bkeyuVYuAi8SGw6l', 'yhSjkxUxIaE6e5v3', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 19:17:49', '2022-05-25 19:17:49'),
+('QelRwhvjykEbdnlu', 'yhSjkxUxIaE6e5v3', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 21:18:09', '2022-05-25 21:18:09'),
+('XaLV0xidOyja3ZEV', '03f2lqMyr8muNcwx', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 21:32:13', '2022-05-25 21:32:13');
 
 -- --------------------------------------------------------
 
@@ -176,6 +202,12 @@ ALTER TABLE `keterangan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `kota`
+--
+ALTER TABLE `kota`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `mitra`
 --
 ALTER TABLE `mitra`
@@ -188,7 +220,8 @@ ALTER TABLE `pengumpulan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_status` (`id_status`),
   ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_mitra` (`id_mitra`);
+  ADD KEY `id_mitra` (`id_mitra`),
+  ADD KEY `id_kota` (`id_kota`);
 
 --
 -- Indeks untuk tabel `role`
@@ -221,10 +254,16 @@ ALTER TABLE `keterangan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT untuk tabel `kota`
+--
+ALTER TABLE `kota`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
@@ -248,7 +287,8 @@ ALTER TABLE `status`
 ALTER TABLE `pengumpulan`
   ADD CONSTRAINT `pengumpulan_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `status` (`id`),
   ADD CONSTRAINT `pengumpulan_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `pengumpulan_ibfk_3` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id`);
+  ADD CONSTRAINT `pengumpulan_ibfk_3` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id`),
+  ADD CONSTRAINT `pengumpulan_ibfk_4` FOREIGN KEY (`id_kota`) REFERENCES `kota` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `user`
