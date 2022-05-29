@@ -1,10 +1,10 @@
-const partnerModel = require('../models/city');
+const cityModel = require('../models/city');
 const helper = require('../helpers');
 
 module.exports = {
   getAllCities: async (request, response) => {
     try {
-      const result = await partnerModel.getAllCities();
+      const result = await cityModel.getAllCities();
 
       return helper.response(response, 200, { message: 'Get All Cities Successfully' }, result);
     } catch (error) {
@@ -14,7 +14,7 @@ module.exports = {
   getCityById: async (request, response) => {
     try {
       const { id } = request.params;
-      const result = await partnerModel.getCityById(id);
+      const result = await cityModel.getCityById(id);
       // const newResult = JSON.parse(result.kota_jangkauan);
       // const array = newResult.map((kota) => parseInt(kota));
       // console.log(array);
@@ -27,7 +27,7 @@ module.exports = {
   postCity: async (request, response) => {
     try {
       const setData = request.body;
-      const result = await partnerModel.postCity(setData);
+      const result = await cityModel.postCity(setData);
 
       return helper.response(response, 200, { message: 'Add City Successfully' }, result);
     } catch (error) {
@@ -38,7 +38,7 @@ module.exports = {
     try {
       const { id } = request.params;
       const setData = request.body;
-      const result = await partnerModel.putCity(id, setData);
+      const result = await cityModel.putCity(id, setData);
       return helper.response(response, 200, { message: 'Edit City Successfully' }, result);
     } catch (error) {
       console.log(error);
@@ -48,7 +48,7 @@ module.exports = {
   deleteCity: async (request, response) => {
     try {
       const { id } = request.params;
-      const result = await partnerModel.deleteCity(id);
+      const result = await cityModel.deleteCity(id);
       return helper.response(response, 200, { message: 'Delete City Successfully' }, result);
     } catch (error) {
       console.log(error);

@@ -57,5 +57,14 @@ module.exports = {
       }
     });
   }),
+  getCitiesCount: () => new Promise((resolve, reject) => {
+    connection.query('SELECT COUNT(id) as total_kota from kota', (error, result) => {
+      if (!error) {
+        resolve(result[0]);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
 
 };

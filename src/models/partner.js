@@ -76,4 +76,13 @@ module.exports = {
       });
     }
   }),
+  getPartnersCount: () => new Promise((resolve, reject) => {
+    connection.query('SELECT COUNT(id) as total_mitra from mitra', (error, result) => {
+      if (!error) {
+        resolve(result[0]);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
 };

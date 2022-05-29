@@ -43,4 +43,13 @@ module.exports = {
       }
     });
   }),
+  getUsersCount: () => new Promise((resolve, reject) => {
+    connection.query('SELECT COUNT(id) as total_user from user', (error, result) => {
+      if (!error) {
+        resolve(result[0]);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
 };

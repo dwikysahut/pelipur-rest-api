@@ -55,4 +55,22 @@ module.exports = {
       }
     });
   }),
+  getCollectionsCount: () => new Promise((resolve, reject) => {
+    connection.query('select COUNT(id) as total_pengumpulan from pengumpulan', (error, result) => {
+      if (!error) {
+        resolve(result[0]);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
+  getOilCount: () => new Promise((resolve, reject) => {
+    connection.query('select SUM(total_minyak) as total_minyak from pengumpulan', (error, result) => {
+      if (!error) {
+        resolve(result);
+      } else {
+        reject(new Error(error));
+      }
+    });
+  }),
 };
