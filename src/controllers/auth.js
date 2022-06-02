@@ -72,7 +72,7 @@ module.exports = {
       };
       refreshTokens.push(refreshToken);
       console.log(refreshTokens);
-      return helper.response(response, 200, { message: 'login Successfully' }, newData);
+      return helper.response(response, 200, { message: 'Login Successfully' }, newData);
     } catch (error) {
       console.log(error);
       return helper.response(response, 500, { message: 'failed to login' });
@@ -126,7 +126,7 @@ module.exports = {
       const result = await authModel.getUserByEmail(email);
       // console.log(result);
       if (!result) {
-        return helper.response(response, 403, { message: 'email doesn\'t exists' });
+        return helper.response(response, 403, { message: 'Email Doesn\'t Exists' });
       }
       const newPassword = generator.generate({
         length: 10,
@@ -141,7 +141,7 @@ module.exports = {
       const emailSent = await helper.nodemailer(result.email, 'Password Recovery Pelipur App', htmlTemplate);
 
       return helper.response(response, 200, {
-        message: 'Your Password has been sent to your email',
+        message: 'Your New Password has been sent to your email',
       });
     } catch (error) {
       console.log(error);
@@ -156,6 +156,10 @@ module.exports = {
       if (!userChecked) {
         return helper.response(response, 401, { message: 'Email not found' });
       }
+      if (userChecked.verified === 'true') {
+        return helper.response(response, 401, { message: 'Email has already Verified' });
+      }
+
       const compare = bcrypt.compareSync(setData.kode, userChecked.kode_verif);
       if (!compare) {
         return helper.response(response, 401, { message: 'Invalid verification code' });

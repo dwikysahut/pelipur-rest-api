@@ -12,12 +12,14 @@ module.exports = {
       const partners = await partnerModel.getPartnersCount();
       const collections = await collectionModel.getCollectionsCount();
       const users = await userModel.getUsersCount();
+      const oil = await collectionModel.getOilCount();
 
       const result = {
         ...cities,
         ...partners,
         ...collections,
         ...users,
+        ...oil,
       };
       console.log(cities);
 

@@ -28,6 +28,11 @@ module.exports = {
     try {
       const { id } = request.params;
       const setData = request.body;
+      const { password } = request.body;
+      if (setData.password) {
+        const passwordHash = bcrypt.hashSync(password, 6);
+        setData.password = passwordHash;
+      }
 
       setData.image = `https://ui-avatars.com/api/?size=256&name=${setData.nama ? setData.nama : 'user'}`;
 
