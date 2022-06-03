@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 25 Bulan Mei 2022 pada 17.20
+-- Waktu pembuatan: 03 Jun 2022 pada 09.54
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -61,7 +61,8 @@ CREATE TABLE `kota` (
 INSERT INTO `kota` (`id`, `kota`) VALUES
 (1, 'Jakarta'),
 (2, 'Depok'),
-(3, 'Tangerang');
+(3, 'Tangerang'),
+(4, 'Bekasi');
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE `mitra` (
 
 INSERT INTO `mitra` (`id`, `nama`, `alamat`, `email`, `date_added`, `date_updated`, `image`, `kota_jangkauan`) VALUES
 (1, 'PT Starlax', 'Green Sedayu Bizpark Blok DM Boulevard No.2 Jl.Daan Mogot KM.18 Kali Deres - Jakarta Barat', 'Admin@starlax.net', '2022-05-20 19:53:33', '2022-05-25 18:31:58', 'image-1653297794418.png', '[1,2,3]'),
-(17, 'PT Starlax', 'malang', 'coba@gmail.com', '2022-05-25 19:09:17', '2022-05-25 22:14:06', 'image-1653480959497.png', '[1,2]'),
+(17, 'PT Starlax', 'malang', 'dwikysahut@gmail.com', '2022-05-25 19:09:17', '2022-06-02 12:53:40', 'image-1653480959497.png', '[1,2]'),
 (18, 'pt coba', 'malang', 'coba@gmail.com', '2022-05-25 22:11:32', '2022-05-25 22:11:32', 'image-1653491492438.jpeg', '[1,3]');
 
 -- --------------------------------------------------------
@@ -105,6 +106,7 @@ CREATE TABLE `pengumpulan` (
   `total_minyak` int(11) NOT NULL,
   `id_status` int(11) NOT NULL DEFAULT 1,
   `id_kota` int(11) NOT NULL,
+  `alamat` varchar(250) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -113,10 +115,10 @@ CREATE TABLE `pengumpulan` (
 -- Dumping data untuk tabel `pengumpulan`
 --
 
-INSERT INTO `pengumpulan` (`id`, `id_user`, `id_mitra`, `tanggal`, `waktu`, `pesan`, `total_minyak`, `id_status`, `id_kota`, `date_added`, `date_updated`) VALUES
-('bkeyuVYuAi8SGw6l', 'yhSjkxUxIaE6e5v3', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 19:17:49', '2022-05-25 19:17:49'),
-('QelRwhvjykEbdnlu', 'yhSjkxUxIaE6e5v3', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 21:18:09', '2022-05-25 21:18:09'),
-('XaLV0xidOyja3ZEV', '03f2lqMyr8muNcwx', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, '2022-05-25 21:32:13', '2022-05-25 21:32:13');
+INSERT INTO `pengumpulan` (`id`, `id_user`, `id_mitra`, `tanggal`, `waktu`, `pesan`, `total_minyak`, `id_status`, `id_kota`, `alamat`, `date_added`, `date_updated`) VALUES
+('cr-y0WvCsxMqSHd8', 'rn2g4lL3iy3ycKuK', NULL, '2022-05-12', '01:45:00', 'bismillah', 12, 1, 2, 'bogor', '2022-05-31 20:40:25', '2022-05-31 20:40:25'),
+('ipeXBFBBynxVbh6U', 'rn2g4lL3iy3ycKuK', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, 'malang', '2022-05-31 20:38:23', '2022-05-31 20:38:23'),
+('XaLV0xidOyja3ZEV', '03f2lqMyr8muNcwx', NULL, '2022-05-22', '20:00:00', 'tolong ambil jam 20:00 keatas', 2, 1, 2, 'jalan malang sekali', '2022-05-25 21:32:13', '2022-06-02 15:27:31');
 
 -- --------------------------------------------------------
 
@@ -167,10 +169,10 @@ INSERT INTO `status` (`id`, `status`) VALUES
 
 CREATE TABLE `user` (
   `id` varchar(36) NOT NULL,
-  `nama` varchar(30) DEFAULT NULL,
+  `nama` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `no_telp` int(15) DEFAULT NULL,
-  `alamat` varchar(50) DEFAULT NULL,
+  `no_telp` int(15) NOT NULL,
+  `alamat` varchar(50) NOT NULL,
   `id_keterangan` int(11) NOT NULL DEFAULT 1,
   `password` varchar(80) NOT NULL,
   `id_role` int(11) NOT NULL DEFAULT 2,
@@ -184,12 +186,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nama`, `email`, `no_telp`, `alamat`, `id_keterangan`, `password`, `id_role`, `image`, `kode_verif`, `verified`) VALUES
-('03f2lqMyr8muNcwx', 'dwikys', 'dwikysatriahut@gmail.com', 123123, NULL, 1, '$2b$06$/ZCMIRmngGqBpXwJuV4HHeTj1cxR4IW3uMP8vAHI8KL5Br60CE7FC', 2, 'https://ui-avatars.com/api/?size=256&name=dwikys', '$2b$06$T8geT0XLuictoCHHuuzfqeavwjYF7Yz7dbeyHBp9dtt0.zxFpwrTu', 'true'),
-('KNjElbGT4bMRGRym', NULL, 'sss@gmail.coms', NULL, NULL, 1, '$2b$06$PeRTcPtslwHMmxc0Vbu.guatopzedqzNGQm1P3XpBa1aqyth2IfT2', 2, 'https://ui-avatars.com/api/?size=256&name=undefined', NULL, 'false'),
-('NUeEkELqjgx_xuVH', NULL, 'asds@gmail.com', NULL, NULL, 1, '$2b$18$gbpnqyS1zZXcuM6kvADiF.EWfAqLEGlhRF3aycpS5kYnlUHdGX0H.', 2, 'https://ui-avatars.com/api/?size=256&name=undefined', NULL, 'false'),
-('ruvuG3W4VLxXAQa9', NULL, 'ffff@gmail.com', NULL, NULL, 1, '$2b$06$pjmLHVFw/xNuyF8aH/RoIu4ETQFzTpLfUt2toxZPeT.myDbyofIjC', 2, 'https://ui-avatars.com/api/?size=256&name=user', NULL, 'false'),
-('V0LHxrhRwqdV3yBN', NULL, 'ada@gmail.com', NULL, NULL, 1, '$2b$06$xohEXDWSsXdRfNAqNISxken1hSzk4aNRkn4xYuSpffw33Y1sstDiC', 2, 'https://ui-avatars.com/api/?size=256&name=user', NULL, 'false'),
-('yhSjkxUxIaE6e5v3', NULL, 'pelipurapps@gmail.com', NULL, NULL, 1, '$2b$06$0j3jZmplF.iFmH8xrRWhiekeWnPCh.I.Ci03w4R/v5xlPJtv4Fi0i', 1, 'https://ui-avatars.com/api/?size=256&name=user', '$2b$06$SCWTrl7kUUQq/bTa6bXfn.4NoSZ2z90bcSKKyPI3IHr0656miGG8i', 'true');
+('03f2lqMyr8muNcwx', 'dwikys', 'dwikysatriahut@gmail.com', 123123, 'malangs', 5, '$2b$06$T8iiadG/PND9JHFCE6c6TuGA.d0/xMzWavYBJ3MqVmeaeRA/.eR.i', 2, 'https://ui-avatars.com/api/?size=256&name=dwikys', '$2b$06$T8geT0XLuictoCHHuuzfqeavwjYF7Yz7dbeyHBp9dtt0.zxFpwrTu', 'true'),
+('fq4PuxMWyAiyMfS4', 'gasga', 'gaga@gmail.com', 123123, 'asdsa', 1, '$2b$06$sBv7CvMdRNlqyumkXTJdROdIFbWFjKaBf7TKChBasg8kk1oeRtbhi', 2, 'https://ui-avatars.com/api/?size=256&name=gasga', '$2b$06$7FkLugfblAMENw5.tGzfWuvz/UnfifYJaIV6JyuWUefDfp1vPMS7m', 'false'),
+('jdsslN_rM96UHcxj', 'ads', 'fggg@gmail.com', 123123, 'asdsa', 1, '$2b$06$Gd.BtpfAlPBb76kIwGpKIO8K3rMZIFFQfHznrWhnGQuW/TEs/XqH.', 2, 'https://ui-avatars.com/api/?size=256&name=ads', '$2b$06$iS.JvYxpYc/ZDbTYmGf.WOvfYQGFDeuxn2Dc1n1HXSwu3nUHMh4QG', 'false'),
+('k-1MqPqXmnkScHBS', 'aaa', 'aaa@gmail.com', 123321, 'asd', 1, '$2b$06$VdVC0N3bZfeoYccZvruwQu3PTlR5qtWL6ZS/W1l/3ZeN3GTzlRfM6', 2, 'https://ui-avatars.com/api/?size=256&name=aaa', '$2b$06$65SHj3//araMQY/x5D3EHOFMvjGnvf3ZOGheBg5DFMz0DMhUdN56i', 'false'),
+('lLoFlsJk34iklZQj', 'gggg', 'ggggg', 12321, 'asdsad', 1, '$2b$06$uTuPc3kfvA6fXZR3jBEFd.jEQjdRdtg4vWO4YsHtnizvEX5NeIEwe', 2, 'https://ui-avatars.com/api/?size=256&name=gggg', '$2b$06$eqRxDqsyI3sQ0SCZOS809eZEvbSMVZAO7KMpPkQ3G6mHjN94M0b8m', 'false'),
+('mS0u8YE8PJx4h6Mn', 'asd', 'ddd@gmail.com', 123, 'asd', 1, '$2b$06$qHn.0f4Sd8azf8ed9zvTlenH5ny5xCSFBUKfyw5cYaivpGgUpiE9i', 2, 'https://ui-avatars.com/api/?size=256&name=asd', '$2b$06$6em7pIk91DbqZTSnVrbM5OjyiDTYIl95D5K.9OcXXMbYUCBaV63t6', 'false'),
+('nD8SAfzLs5XXj_aD', 'asd', 'dasd@gmail.com', 12312, 'asd', 1, '$2b$06$a32G1Vx9DnZfF4SiI9S8QOzIdcmYn4gSQHCRudi8eMS0p14KJaAtC', 2, 'https://ui-avatars.com/api/?size=256&name=asd', '$2b$06$Mw0SSxZuhcL4zvSCZx3uH.fG4x.d8NT8zWYY4ynnkeHXXi4WC3192', 'false'),
+('NM2VehMnwGOBi5qU', 'asdsa', 'asdasd', 123, 'ads', 1, '$2b$06$22nmWkkTRZJ8BDQ7BN//uelYQv8AhBwLnjgSsK6daDlfKbBpwcCU2', 2, 'https://ui-avatars.com/api/?size=256&name=asdsa', '$2b$06$jQWEjfZe6bANAPINSVjQ7Och4YI1PhOY/SVk55p1S4Ti8PbesZNdm', 'false'),
+('NQznp8k1tc8ITnWp', 'dwiky', 'dwikysahut@gmail.com', 12312313, 'malang', 1, '$2b$06$16JMlF06tumr7OGG5Tn1Ze6MYBicBSvCZcU2rV.YaFoS/36wye1Du', 2, 'https://ui-avatars.com/api/?size=256&name=dwiky', '$2b$06$pJWw.ZL.QZipFDce0IYhE.bMKDO8AeZdrCR28WpimlltkpAgnZ4eG', 'true'),
+('rn2g4lL3iy3ycKuK', 'sweet', 'sweetpapayahh@gmail.com', 8123456, 'mars', 1, '$2b$06$s4aX9BiLm2TQbwUMtgfuOe9vR8eLPAxxSBnOT1bkoqEEEv8SmHxa6', 2, 'https://ui-avatars.com/api/?size=256&name=sweet', '$2b$06$9BdR.UbkIaOoSLihpYEO3u/XopQj9Izgl.zUyWZsiZbkNuoWD0num', 'true'),
+('SkfHYucbR_8hyYDc', 'asd', 'asd@gmail.com', 123, '123asd', 1, '$2b$06$JXRDJ6idsdli5DTNtOWkG.Or4Y4Fz/aZmD5eXpIBEPxkOYe18Ji8K', 2, 'https://ui-avatars.com/api/?size=256&name=asd', '$2b$06$lW7tX7/nhaUSP7Ba5vwOg.yaELQ7iA/C7Bju2x.t7xwrIvSeFZUM.', 'false'),
+('yhSjkxUxIaE6e5v3', 'admin', 'pelipurapps@gmail.com', 123123, 'malang', 1, '$2b$06$0j3jZmplF.iFmH8xrRWhiekeWnPCh.I.Ci03w4R/v5xlPJtv4Fi0i', 1, 'https://ui-avatars.com/api/?size=256&name=user', '$2b$06$SCWTrl7kUUQq/bTa6bXfn.4NoSZ2z90bcSKKyPI3IHr0656miGG8i', 'true');
 
 --
 -- Indexes for dumped tables
