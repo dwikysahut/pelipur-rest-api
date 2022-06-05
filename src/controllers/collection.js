@@ -67,8 +67,9 @@ module.exports = {
       const setData = request.body;
       const responseData = await collectionModel.putCollection(id, setData);
       const result = await collectionModel.getCollectionById(responseData.id);
+      console.log(result);
       const partner = await partnerModel.getPartnerById(request.body.id_mitra);
-      const newTanggal= new Date(result.tanggal)
+      const newTanggal = new Date(result.tanggal);
       const htmlTemplate = ` <center><h2>Identitas</h2><hr> </center>
       Nama : <span><b>${result.nama_user}</b></span><br><br>
       No Telp : <span>${result.no_telp}</span><br><br>
@@ -79,9 +80,11 @@ module.exports = {
       Alamat : <span><b>${result.alamat}</b></span><br><br>
       Total Minyak : <span><b>${result.total_minyak}</b></span><br><br>
       Kota : <span><b>${result.kota}</b></span><br><br>
+      Status: <span><b>${result.status}</b></span><br><br>
     `;
 
-      const emailSent = await helper.nodemailer(partner.email, 'Permintaan Pengumpulan Minyak', htmlTemplate);
+      const mitraEmailSent = await helper.nodemailer(partner.email, 'Permintaan Pengumpulan Minyak', htmlTemplate);
+      const userEmailSent = await helper.nodemailer(result.email_user, 'Status Permintaan Pengumpulan Minyak', htmlTemplate);
 
       return helper.response(response, 200, { message: 'confirm Collection Successfully' }, responseData);
     } catch (error) {
