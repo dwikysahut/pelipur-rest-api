@@ -22,7 +22,7 @@ module.exports = {
   }),
 
   getPartnerByCity: (kota) => new Promise((resolve, reject) => {
-    connection.query('SELECT * FROM mitra where kota_jangkauan LIKE "%?%"', kota, (error, result) => {
+    connection.query(`SELECT * FROM mitra where kota_jangkauan LIKE "%${kota}%"`, (error, result) => {
       if (!error) {
         resolve(result);
       } else {

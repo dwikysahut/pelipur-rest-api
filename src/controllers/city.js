@@ -31,6 +31,7 @@ module.exports = {
 
       return helper.response(response, 200, { message: 'Add City Successfully' }, result);
     } catch (error) {
+      console.log(error.message);
       return helper.response(response, 500, { message: 'Failed to add City' });
     }
   },

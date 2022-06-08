@@ -29,7 +29,8 @@ module.exports = {
     try {
       const { id } = request.params;
       const result = await collectionModel.getCollectionById(id);
-      const resultPartner = await partnerModel.getPartnerByCity(result.id_kota);
+      const resultPartner = await partnerModel.getPartnerByCity(result.kota);
+      console.log(result);
       return helper.response(response, 200, { message: 'Get Partner by City Successfully' }, resultPartner);
     } catch (error) {
       console.log(error);
