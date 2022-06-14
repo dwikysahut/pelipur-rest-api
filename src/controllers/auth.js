@@ -15,6 +15,7 @@ module.exports = {
     try {
       const setData = request.body;
       setData.id = setData.id || nanoid(16);
+      console.log(setData.no_telp);
 
       const emailChecked = await authModel.getUserByEmail(setData.email);
 

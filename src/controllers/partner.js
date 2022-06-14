@@ -45,6 +45,7 @@ module.exports = {
 
       return helper.response(response, 200, { message: 'Add Partner Successfully' }, result);
     } catch (error) {
+      console.log(error);
       return helper.response(response, 500, { message: 'Failed to add partner' });
     }
   },
@@ -73,9 +74,11 @@ module.exports = {
     try {
       const { id } = request.params;
       const partner = await partnerModel.getPartnerById(id);
-      await partnerModel.deletePartnerImage(partner.image);
 
       const result = await partnerModel.deletePartner(id);
+      if (result) {
+        await partnerModel.deletePartnerImage(partner.image);
+      }
       return helper.response(response, 200, { message: 'Delete Partner Successfully' }, result);
     } catch (error) {
       console.log(error);
