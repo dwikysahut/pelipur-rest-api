@@ -1,19 +1,35 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const morgan = require('morgan');
 const routeNavigator = require('./src/index');
 require('dotenv').config();
 
-const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
-  const host = server.address().address;
-  const { port } = server.address();
+// const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
+//   const host = server.address().address;
+//   const { port } = server.address();
 
-  console.log(`server start at ${host} : ${port}`);
-});
+//   console.log(`server start at ${host} : ${port}`);
+// });
 
+https
+  .createServer(
+    {
+      key: fs.readFileSync(path.resolve('ssl/server.key')),
+      cert: fs.readFileSync(path.resolve('ssl/server.cert')),
+    },
+    app,
+  )
+  .listen(process.env.PORT, () => {
+    console.log(
+      `Example app listening on port ${process.env.PORT}! Go to https://localhost:${process.env.PORT}/`,
+    );
+  });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
