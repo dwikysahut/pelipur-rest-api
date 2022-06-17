@@ -29,4 +29,14 @@ module.exports = {
       return helper.response(response, 500, { message: 'Failed to get Data Count' });
     }
   },
+  getCollectionsByMonth: async (request, response) => {
+    try {
+      const result = await collectionModel.getCollectionsByMonth();
+
+      return helper.response(response, 200, { message: 'Get Collections Count By Month successfully' }, result);
+    } catch (error) {
+      console.log(error);
+      return helper.response(response, 500, { message: 'Failed to get Collections Count By Month successfully' });
+    }
+  },
 };

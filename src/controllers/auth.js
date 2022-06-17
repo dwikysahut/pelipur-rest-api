@@ -65,6 +65,9 @@ module.exports = {
           result,
         },
         process.env.REFRESH_TOKEN_SECRET_KEY,
+        {
+          expiresIn: '5d',
+        },
       );
       const newData = {
         ...result,
@@ -93,7 +96,9 @@ module.exports = {
         const newToken = jwt.sign({ result }, process.env.SECRET_KEY, {
           expiresIn: '3d',
         });
-        const newRefreshToken = jwt.sign({ result }, process.env.REFRESH_TOKEN_SECRET_KEY);
+        const newRefreshToken = jwt.sign({ result }, process.env.REFRESH_TOKEN_SECRET_KEY, {
+          expiresIn: '4d',
+        });
         const newResult = {
           token: newToken,
           refreshToken: newRefreshToken,

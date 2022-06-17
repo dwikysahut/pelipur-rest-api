@@ -73,4 +73,10 @@ module.exports = {
       }
     });
   }),
+  getCollectionsByMonth: () => new Promise((resolve, reject) => {
+    connection.query('SELECT count(*) as count,CONCAT(MONTHNAME(date_added),\'/\',  YEAR(date_added)) as month from pengumpulan group by month ORDER BY date_added asc', (error, result) => {
+      if (!error) resolve(result);
+      else reject(new Error(error));
+    });
+  }),
 };
