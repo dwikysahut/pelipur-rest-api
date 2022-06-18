@@ -9,6 +9,7 @@ const partnerRoutes = require('./routes/partner');
 const cityRoutes = require('./routes/city');
 const descRoutes = require('./routes/description');
 const dataRoutes = require('./routes/data');
+const newsRoutes = require('./routes/news');
 
 Route.use('/auth', authRoutes);
 Route.use('/users', userRoutes);
@@ -17,4 +18,5 @@ Route.use('/partners', partnerRoutes);
 Route.use('/cities', cityRoutes);
 Route.use('/descriptions', descRoutes);
 Route.use('/datas', dataRoutes);
+Route.use('/news', newsRoutes);
 module.exports = Route;

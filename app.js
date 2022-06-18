@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const https = require('https');
+const http = require('https');
 const fs = require('fs');
 const path = require('path');
 
@@ -17,6 +18,11 @@ require('dotenv').config();
 //   console.log(`server start at ${host} : ${port}`);
 // });
 
+http.createServer(app).listen(3000, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
+  console.log(
+    `Example app listening on port ${process.env.PORT}! Go to https://localhost:${process.env.PORT}/`,
+  );
+});
 https
   .createServer(
     {
@@ -25,9 +31,9 @@ https
     },
     app,
   )
-  .listen(process.env.PORT, () => {
+  .listen(process.env.PORT_HTTPS, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
     console.log(
-      `Example app listening on port ${process.env.PORT}! Go to https://localhost:${process.env.PORT}/`,
+      `Example app listening on port ${process.env.PORT_HTTPS}! Go to https://localhost:${process.env.PORT_HTTPS}/`,
     );
   });
 app.use(bodyParser.json());
@@ -41,6 +47,7 @@ app.use(
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: 'true',
     optionSuccessStatus: 200,
+
   }),
 );
 app.use('/', routeNavigator);
