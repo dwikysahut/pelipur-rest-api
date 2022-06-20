@@ -9,6 +9,7 @@ module.exports = {
       const result = await userModel.getUserById(id);
       return helper.response(response, 200, { message: 'get Data user by id successfully' }, result);
     } catch (error) {
+      console.log(error)
       return helper.response(response, 500, { message: 'error has occurred' }, error);
     }
   },

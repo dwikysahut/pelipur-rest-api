@@ -31,7 +31,7 @@ module.exports = {
     });
   }),
   getUserById: (id) => new Promise((resolve, reject) => {
-    connection.query('SELECT * FROM user where id=? ', id, (error, result) => {
+    connection.query('SELECT user.*,keterangan.keterangan as keterangan FROM user INNER JOIN keterangan on user.id_keterangan = keterangan.id where user.id=? ', id, (error, result) => {
       if (!error) {
         const newData = {
           ...result[0],

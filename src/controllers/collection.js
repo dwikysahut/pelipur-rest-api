@@ -39,6 +39,12 @@ module.exports = {
     try {
       const setData = request.body;
       setData.id_user = request.token.result.id ? request.token.result.id : request.token.result.result.id;
+      console.log(request.token.result.suspend);
+      const { suspend } = request.token.result;
+
+      if (suspend === 1) {
+        return helper.response(response, 401, { message: 'Account has been suspended, please contact Admin' }, {});
+      }
       setData.id = nanoid(16);
       setData.id_status = 1;
 
@@ -83,8 +89,8 @@ module.exports = {
       Status: <span><b>${result.status}</b></span><br><br>
     `;
 
-      const mitraEmailSent = await helper.nodemailer(partner.email, 'Permintaan Pengumpulan Minyak', htmlTemplate);
-      const userEmailSent = await helper.nodemailer(result.email_user, 'Status Permintaan Pengumpulan Minyak', htmlTemplate);
+      await helper.nodemailer(partner.email, 'Permintaan Pengumpulan Minyak', htmlTemplate);
+      await helper.nodemailer(result.email_user, 'Status Permintaan Pengumpulan Minyak', htmlTemplate);
 
       return helper.response(response, 200, { message: 'confirm Collection Successfully' }, responseData);
     } catch (error) {
