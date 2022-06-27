@@ -61,6 +61,17 @@ module.exports = {
       const { id } = request.params;
       const setData = request.body;
       const result = await collectionModel.putCollection(id, setData);
+      const resultForm = await collectionModel.getCollectionById(id);
+      let htmlTemplate = '';
+      if (setData.id_status === 3) {
+        htmlTemplate = ` <center><h2><b>Permintaan Pengumpulan DITOLAK</b></h2><hr> </center>
+   <span>Hi.. Mohon maaf, Pengajuan Pengumpulan minyak <b>DITOLAK</b> Karena Untuk saat ini <b>Alamat anda berada diluar jangkauan Kami </b></span><br><br><br>
+   <span>Terimakasih, Teruslah menjadi bagian dari kami untuk menjadikan Bumi kita tetap terjaga</span><br><br>
+   
+    `;
+        await helper.nodemailer(resultForm.email_user, 'Status Permintaan Pengumpulan Minyak', htmlTemplate);
+      }
+
       return helper.response(response, 200, { message: 'put Collection Successfully' }, result);
     } catch (error) {
       console.log(error);
@@ -76,7 +87,7 @@ module.exports = {
       console.log(result);
       const partner = await partnerModel.getPartnerById(request.body.id_mitra);
       const newTanggal = new Date(result.tanggal);
-      const htmlTemplate = ` <center><h2>Identitas</h2><hr> </center>
+      const htmlTemplate = ` <center><h2><b>PERMINTAAN PENGUMPULAN DISETUJUI</b></h2><hr> </center>
       Nama : <span><b>${result.nama_user}</b></span><br><br>
       No Telp : <span>${result.no_telp}</span><br><br>
       Email : <span><b>${result.email_user}</b></span><br><br>
@@ -87,6 +98,8 @@ module.exports = {
       Total Minyak : <span><b>${result.total_minyak}</b></span><br><br>
       Kota : <span><b>${result.kota}</b></span><br><br>
       Status: <span><b>${result.status}</b></span><br><br>
+      <br></br>
+
     `;
 
       await helper.nodemailer(partner.email, 'Permintaan Pengumpulan Minyak', htmlTemplate);
