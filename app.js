@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const https = require('https');
-const http = require('https');
-const fs = require('fs');
-const path = require('path');
+// const https = require('https');
+// const http = require('https');
+// const fs = require('fs');
+// const path = require('path');
 
 const app = express();
 const morgan = require('morgan');
@@ -18,7 +18,8 @@ const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production
   console.log(`server start at ${host} : ${port}`);
 });
 
-// http.createServer(app).listen(3000, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
+// http.createServer(app).listen(3000, process.env.NODE_ENV === 'production' ?
+//  process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
 //   console.log(
 //     `Example app listening on port ${process.env.PORT}! Go to https://localhost:${process.env.PORT}/`,
 //   );
@@ -31,7 +32,8 @@ const server = app.listen(process.env.PORT, process.env.NODE_ENV === 'production
 //     },
 //     app,
 //   )
-//   .listen(process.env.PORT_HTTPS, process.env.NODE_ENV === 'production' ? process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
+//   .listen(process.env.PORT_HTTPS, process.env.NODE_ENV === 'production' ?
+// process.env.HOST_DEPLOY : process.env.HOST_LOCAL, () => {
 //     console.log(
 //       `Example app listening on port ${process.env.PORT_HTTPS}! Go to https://localhost:${process.env.PORT_HTTPS}/`,
 //     );
