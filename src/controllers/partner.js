@@ -59,7 +59,13 @@ module.exports = {
           console.log('gambar undefined');
         } else {
           setData.image = request.file.filename;
-          if (partner.image) { await partnerModel.deletePartnerImage(partner.image); }
+          try {
+            if (partner.image) {
+              await partnerModel.deletePartnerImage(partner.image);
+            }
+          } catch (error) {
+            console.log('no image found');
+          }
         }
       }
 
